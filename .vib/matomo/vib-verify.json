@@ -50,8 +50,8 @@
             "resources": {
               "path": "/.vib/matomo/cypress"
             },
-            "endpoint": "lb-matomo-http",
-            "app_protocol": "HTTP",
+            "endpoint": "lb-matomo-https",
+            "app_protocol": "HTTPS",
             "env": {
               "username": "user",
               "password": "ComplicatedPassword123!4"
