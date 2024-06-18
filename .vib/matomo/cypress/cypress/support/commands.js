@@ -7,7 +7,7 @@ const COMMAND_DELAY = 3000;
 export const baseURL = () => {
   const baseURL = 'https://bitnami-matomo.my';
   const port = Cypress.env('port');
-  if (port && port !== 80) {
+  if (port && port !== 80 && port !== 443 ) {
     return `${baseURL}:${port}`;
   }
   return baseURL;
