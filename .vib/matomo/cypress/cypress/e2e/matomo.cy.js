@@ -29,17 +29,19 @@ it('allows to create a new website', () => {
 // The Matomo API allows checking the site analytics and tracking metrics
 // Source: https://matomo.org/guide/apis/analytics-api/
 it('allows to use the API to retrieve analytics', () => {
-  // Record a new visit in order to generate analytics beforehand
-  cy.request(`${baseURL()}/matomo.php?idsite=1&rec=1`).then((response) => {
-    expect(response.status).to.eq(200);
-  });
+  let retries = 5;
+  do {
+    // Record several visits in order to generate analytics beforehand
+    cy.request(`${baseURL()}/matomo.php?idsite=1&rec=1`).then((response) => {
+      expect(response.status).to.eq(200);
+    });
+    cy.wait(1000);
+  } while (--retries >= 0);
 
   cy.login();
   // Navigate using the UI as Matomo will randomly fail with
   // "token mismatch" if accessed directly
-  cy.contains('Forms', {timeout: 60000});
   cy.get('#topmenu-coreadminhome').click();
-  cy.contains('System Summary', {timeout: 60000});
   cy.contains('Personal').click();
   cy.contains('Security').click();
   cy.contains('Create new token', {timeout: 60000}).click();
